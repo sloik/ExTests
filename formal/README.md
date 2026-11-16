@@ -29,9 +29,23 @@ Mutants: `once_strict_forgets_strict` (caught by `OnceStrictIsExactlyOnce`), `so
 
 ## Running
 
+Local runs and CI use the shared Oracle queue through `formal/run_tlc.sh`.
+They require an installed, authorized `tla-queue` client and configured access to
+the maintainer-operated Oracle backend. Ask the maintainer for client setup and
+access; public repository access does not provide queue access.
+
+Run from the repository root after that setup:
+
 ```sh
-TLA_JAR=/path/to/tla2tools-1.7.4.jar formal/run_tlc.sh   # needs Java 11+
+TLA_JAR=/path/to/tla2tools-1.7.4.jar formal/run_tlc.sh   # needs Java 11+ on Oracle
 ```
+
+`TLA_JAR` and optional `JAVA` overrides refer to **Oracle-side tools**. The example
+JAR path must already exist on Oracle; leave the overrides unset to use the remote
+defaults. For this check, do not run Java/TLC locally, install or download a local
+toolchain (including with `mise`), or use direct SSH as a fallback. A missing
+client, unavailable queue, incomplete run, or nonzero wrapper exit is not a
+verification pass.
 
 CI: `.github/workflows/oracle-tla.yml` (self-hosted Oracle ARM64 runner, default branch / manual dispatch).
 
